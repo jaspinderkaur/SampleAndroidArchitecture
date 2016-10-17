@@ -3,12 +3,9 @@ package com.example.jaspinder.myapplication.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import auto.parcel.AutoParcel;
-
 /**
  * Created by Jaspinder on 16/10/16.
  */
-@AutoParcel
 public class Place implements Parcelable {
   private int id;
   private String name;

@@ -27,7 +27,9 @@ public class PlaceListPresenter implements Presenter {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
-
+    if (savedInstanceState != null) {
+      mViewModel = savedInstanceState.getParcelable(PlaceList.class.getSimpleName());
+    }
   }
 
   @Override
@@ -57,7 +59,7 @@ public class PlaceListPresenter implements Presenter {
         }, new Action1<Throwable>() {
           @Override
           public void call(Throwable throwable) {
-            Log.e("CatalogPresenter", "Error while getting data", throwable);
+            Log.e("PlaceListPresenter", "Error while getting data", throwable);
           }
         });
   }

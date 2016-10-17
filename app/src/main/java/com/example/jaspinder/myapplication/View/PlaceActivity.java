@@ -1,5 +1,6 @@
 package com.example.jaspinder.myapplication.View;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.jaspinder.myapplication.DaggerPlaceComponent;
+import com.example.jaspinder.myapplication.DemoApplication;
+import com.example.jaspinder.myapplication.PlaceComponent;
+import com.example.jaspinder.myapplication.PlaceModule;
 import com.example.jaspinder.myapplication.R;
 import com.example.jaspinder.myapplication.entity.Place;
 import com.example.jaspinder.myapplication.entity.PlaceList;
@@ -40,6 +45,7 @@ public class PlaceActivity extends AppCompatActivity
 
   //HEAD: declare variables
   private List<Place> mDataSet;
+  private PlaceComponent mCatalogComponent;
 
   private Subscription mViewModelSubscription;
 
@@ -48,10 +54,18 @@ public class PlaceActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    mCatalogComponent = DaggerPlaceComponent.builder()
+        .applicationComponent(((DemoApplication)getApplication()).getAppComponent())
+        .placeModule(new PlaceModule(this))
+        .build();
+    mCatalogComponent.inject(this);
+
     setUpToolBar();
     setUpDrawer();
     setUpUI();
     setDataAdapter();
+
+    mPresenter.onCreate(savedInstanceState);
   }
 
   /**
@@ -89,7 +103,7 @@ public class PlaceActivity extends AppCompatActivity
    * set up data adapter
    */
   private void setDataAdapter() {
-    mAdapter = new PlaceAdapter(this, mDataSet);
+    mAdapter = new PlaceAdapter(this);
   }
 
   @Override
@@ -137,5 +151,17 @@ public class PlaceActivity extends AppCompatActivity
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    mPresenter.onPause(outState);
+  }
+  @Override
+  protected void onPause() {
+    super.onPause();
+    mViewModelSubscription.unsubscribe();
+
   }
 }

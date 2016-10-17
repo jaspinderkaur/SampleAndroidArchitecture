@@ -23,9 +23,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   private Context mContext;
   private List<Place> mDataSet = new ArrayList<>();
 
-  public PlaceAdapter(@NonNull Context context, @NonNull List<Place> dataSet) {
+  public PlaceAdapter(@NonNull Context context) {
     this.mContext = context;
-    this.mDataSet = dataSet;
   }
 
   @Override
