@@ -4,5 +4,12 @@
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
 
+  <!-- navigation item title -->
+  <string name="nav_news_title">News</string>
+  <string name="nav_places_title">Places</string>
+  <string name="nav_events_title">Events</string>
+  <string name="nav_profile_title">Profile</string>
+  <string name="nav_settings_title">Settings</string>
+
   <string name="action_settings">Settings</string>
 </resources>
